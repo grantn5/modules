@@ -62,6 +62,15 @@ input:
       type: file
       description: |
         Input reference cnn-file (only for germline and tumor-only running)
+  - meta6:
+      type: map
+      description: |
+        Groovy Map containing information about annotation file
+        e.g. [ id:'test' ]
+  - annotation:
+      type: file
+      description: |
+        Input annotation bed or txt file
 
 output:
   - meta:

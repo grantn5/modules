@@ -17,8 +17,9 @@ workflow test_cnvkit_hybrid_somatic {
     ]
     fasta   = [[:],file(params.test_data['sarscov2']['genome']['genome_fasta'], checkIfExists: true)]
     targets = [[:],file(params.test_data['sarscov2']['genome']['baits_bed'], checkIfExists: true)]
+    annotation = [[:],file("/Users/grantneilson/Downloads/sarscov_genome.bed", checkIfExists: true)]
 
-    CNVKIT_HYBRID ( input, fasta, [[:],[]], targets, [[:],[]], false )
+    CNVKIT_HYBRID ( input, fasta, [[:],[]], targets, [[:],[]], annotation, false )
 }
 
 workflow test_cnvkit_wgs_somatic {
@@ -29,8 +30,10 @@ workflow test_cnvkit_wgs_somatic {
         file(params.test_data['homo_sapiens']['illumina']['test_paired_end_sorted_bam'], checkIfExists: true)
     ]
     fasta = [[:],file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true)]
+    annotation = [[:],file("/Users/grantneilson/Downloads/homo_sapiens_genome.bed", checkIfExists: true)]
 
-    CNVKIT_WGS ( input, fasta, [[:],[]], [[:],[]], [[:],[]], false )
+
+    CNVKIT_WGS ( input, fasta, [[:],[]], [[:],[]], [[:],[]], annotation, false )
 }
 
 workflow test_cnvkit_cram_wgs_somatic {
@@ -42,8 +45,9 @@ workflow test_cnvkit_cram_wgs_somatic {
     ]
     fasta     = [[:],file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true)]
     fasta_fai = [[:],file(params.test_data['homo_sapiens']['genome']['genome_fasta_fai'], checkIfExists: true)]
+    annotation  = [[:],file("/Users/grantneilson/Downloads/homo_sapiens_genome.bed", checkIfExists: true)]
 
-    CNVKIT_WGS ( input, fasta, fasta_fai, [[:],[]], [[:],[]], false )
+    CNVKIT_WGS ( input, fasta, fasta_fai, [[:],[]], [[:],[]], annotation, false )
 }
 
 
@@ -56,7 +60,7 @@ workflow test_cnvkit_tumoronly_hybrid_bam {
     ]
     reference = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_reference_cnn'], checkIfExists: true)]
 
-    CNVKIT_TUMORONLY ( input, [[:],[]], [[:],[]],  [[:],[]], reference, false )
+    CNVKIT_TUMORONLY ( input, [[:],[]], [[:],[]],  [[:],[]], reference, [[:],[]], false )
 }
 
 workflow test_cnvkit_tumoronly_hybrid_cram {
@@ -69,7 +73,7 @@ workflow test_cnvkit_tumoronly_hybrid_cram {
     fasta     = [[:],file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true)]
     reference = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_reference_cnn'], checkIfExists: true)]
 
-    CNVKIT_TUMORONLY ( input, fasta, [[:],[]], [[:],[]], reference, false )
+    CNVKIT_TUMORONLY ( input, fasta, [[:],[]], [[:],[]], reference, [[:],[]], false )
 }
 
 workflow test_cnvkit_germline_hybrid_cram {
@@ -83,7 +87,8 @@ workflow test_cnvkit_germline_hybrid_cram {
     fasta_fai = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_fasta_fai'], checkIfExists: true)]
     targets   = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_multi_interval_bed'], checkIfExists: true)]
 
-    CNVKIT_GERMLINE ( input, fasta, fasta_fai, targets,  [[:],[]], false )
+
+    CNVKIT_GERMLINE ( input, fasta, fasta_fai, targets, [[:],[]], [[:],[]], false )
 }
 
 workflow test_cnvkit_germline_hybrid_bam {
@@ -96,7 +101,7 @@ workflow test_cnvkit_germline_hybrid_bam {
     fasta     = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_fasta'], checkIfExists: true)]
     targets   = [[:],file(params.test_data['homo_sapiens']['genome']['genome_21_multi_interval_bed'], checkIfExists: true)]
 
-    CNVKIT_GERMLINE ( input, fasta, [[:],[]], targets,  [[:],[]], false )
+    CNVKIT_GERMLINE ( input, fasta, [[:],[]], targets,  [[:],[]], [[:],[]], false )
 }
 
 workflow test_cnvkit_pon {
@@ -109,6 +114,7 @@ workflow test_cnvkit_pon {
         ]
     ]
     fasta = [[:],file(params.test_data['homo_sapiens']['genome']['genome_fasta'], checkIfExists: true)]
+    annotation  = [[:],file("/Users/grantneilson/Downloads/homo_sapiens_genome.bed", checkIfExists: true)]
 
-    CNVKIT_PON ( input, fasta, [[:],[]], [[:],[]], [[:],[]], true )
+    CNVKIT_PON ( input, fasta, [[:],[]], [[:],[]], [[:],[]], annotation, true )
 }

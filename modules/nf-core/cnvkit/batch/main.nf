@@ -13,6 +13,7 @@ process CNVKIT_BATCH {
     tuple val(meta3), path(fasta_fai)
     tuple val(meta4), path(targets)
     tuple val(meta5), path(reference)
+    tuple val(meta6), path(annotation)
     val   panel_of_normals
 
     output:
@@ -75,6 +76,7 @@ process CNVKIT_BATCH {
 
     def target_args = targets ? "--targets $targets" : ""
     def reference_args = reference ? "--reference $reference" : ""
+    def annotation_args = annotation ? "--annotate $annotation" : ""
 
     def samtools_cram_convert = ''
     samtools_cram_convert += normal_cram ? "    samtools view -T $fasta $fai_reference $normal -@ $task.cpus -o $normal_out\n" : ''
@@ -93,6 +95,7 @@ process CNVKIT_BATCH {
         $normal_args \\
         $fasta_args \\
         $reference_args \\
+        $annotation_args \\
         $target_args \\
         --processes $task.cpus \\
         $args
